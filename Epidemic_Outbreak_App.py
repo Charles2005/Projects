@@ -118,7 +118,7 @@ class Population:
         """Spreading the virus"""
         for i in range(sim.grid_size):
             for o in range(sim.grid_size):
-                if self.population[i][o].is_dead == False:
+                if self.population[i][o].is_dead is False:
                     # if the person is not dead
                     if i == 0:
                         if o == 0:
