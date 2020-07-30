@@ -179,13 +179,14 @@ def warrior_play():
 
 def titlescreen():
     """Creating a Title Screen"""
-    print("|--------Welcome To Morphia-------------|")
-    print("|--------------Start--------------------|")
+    print("|--------Welcome To Morphia------------|")
+    print("|--------------Start-------------------|")
     print("|--------------Help--------------------|")
     print("|--------------Quit--------------------|")
     # Get user input
     choose = input('> ').lower()
     if choose == 'start':
+        print("\n" * 100)
         play()
     elif choose == 'help':
         helper()
@@ -205,10 +206,10 @@ def titlescreen():
 
 def helper():
     """This function will run if user choose help"""
-    print("|-------------------------------|")
+    print("|-------------------------------------|")
     print("| Just type the options that you want |")
-    print("|      Goodluck and have fun         |")
-    print("|-------------------------------|")
+    print("|      Goodluck and have fun          |")
+    print("|-------------------------------------|")
     print('\nType back to go to the titlescreen.')
     goback = input('> ').lower()
     if goback in ['back', 'go back']:
