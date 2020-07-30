@@ -134,19 +134,22 @@ class Status:
     def __init__(self):
         self.dead = False
 
-    def assassin_stats(self, assassin):
+    @staticmethod
+    def assassin_stats(assassin):
         print('\nThis are your stats')
         print(f'Attack: {assassin.attack} damage')
         print(f'Health: {assassin.hp} hp')
         print(f'Mana: {assassin.mp} mp')
 
-    def mage_stats(self, mage):
+    @staticmethod
+    def mage_stats(mage):
         print('\nThis are your stats')
         print(f'Attack: {mage.attack} damage')
         print(f'Health: {mage.hp} hp')
         print(f'Mana: {mage.mp} mp')
 
-    def warrior_stats(self, warrior):
+    @staticmethod
+    def warrior_stats(warrior):
         print('\nThis are your stats')
         print(f'Attack: {warrior.attack} damage')
         print(f'Health: {warrior.hp} hp')
