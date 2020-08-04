@@ -5,29 +5,33 @@ import time
 
 # Characters or Roles
 class Assassin:
+    """Initialize assassin class"""
     def __init__(self, name):
         self.name = name
-        self.hp = 130
-        self.attack = 105
-
-
-class Warrior:
-    def __init__(self, name):
-        self.name = name
-        self.hp = 150
+        self.hp = 120
         self.attack = 90
 
 
-class Archer:
+class Warrior:
+    """Initialize warrior class"""
     def __init__(self, name):
         self.name = name
-        self.hp = 125
-        self.attack = 85
+        self.hp = 130
+        self.attack = 80
+
+
+class Archer:
+    """Initialize Archer class"""
+    def __init__(self, name):
+        self.name = name
+        self.hp = 100
+        self.attack = 75
 
 # Enemy
 
 
 class Trolls:
+    """Initialize Trolls class"""
     def __init__(self):
         self.name = 'Trolls'
         self.hp = 70
@@ -35,6 +39,7 @@ class Trolls:
 
 
 class Goblins:
+    """Initialize Goblins class"""
     def __init__(self):
         self.name = 'Goblins'
         self.hp = 100
@@ -42,6 +47,7 @@ class Goblins:
 
 
 class FieryFiend:
+    """Initialize Fiery Fiend class"""
     def __init__(self):
         self.name = 'Fiery Fiend'
         self.hp = 150
@@ -49,6 +55,7 @@ class FieryFiend:
 
 
 class Dragon:
+    """Initialize Dragon class"""
     def __init__(self):
         self.name = 'Dragon'
         self.hp = 250
@@ -63,7 +70,7 @@ class Potions:
         self.hp = random.randint(20, 50)
 
 
-# Weapons
+# Weapon
 class Weapon:
     def __init__(self):
         self.name = "Weapon"
@@ -92,10 +99,10 @@ class Status:
         Status.playing_stats(charac)
         print("\nYou're dead")
         play_again = input('\nDo you want to play again?(y/n): ').lower()
-
+        # IF the user choose no the game will exit
         if play_again not in ['y', 'yes']:
             sys.exit()
-        else:
+        else:  # It will print a space to clear the window and call again the title screen function
             print("\n" * 20)
             titlescreen()
 
@@ -114,6 +121,7 @@ def play(charac, status):
         time.sleep(0.05)
     # Ask user to enter the cave
     start_game = input("\nEnter the cave?(y/n): ").lower()
+    # Flag to start the game
     if start_game in ['y', 'yes']:
         game_on = True
     else:
@@ -128,15 +136,13 @@ def play(charac, status):
             sys.stdout.write(letter)
             sys.stdout.flush()
             time.sleep(0.05)
-        choice = input("\n> ").lower()
+        choose_path = input("\n> ").lower()
 
-        # If the choice if user is forward
-        while choice not in ['right, left']:
+        # If the choose_path if user is forward
+        while choose_path != "left":
             # Classes that need in this gameplay
             potion = Potions()
             weapon = Weapon()
-            trolls = Trolls()
-            goblin = Goblins()
             fiery_fiend = FieryFiend()
             dragon = Dragon()
 
@@ -146,10 +152,11 @@ def play(charac, status):
             print("\n\n\tThere is a boulder covering the path what do you want to do?")
             print("\t\t\tBreak\t\t\tInspect")
             print("----------------------------------------------------------------")
-            choice = input("\n> ").lower()
+            # Get user input
+            choose_path = input("\n> ").lower()
 
-            # If the choice is inspect
-            if choice == "inspect":
+            # If the choose_path is inspect
+            if choose_path == "inspect":
                 print(f"You found your first {weapon.name}!!!")
                 charac.attack += weapon.attack
                 charac.hp += weapon.hp
@@ -162,18 +169,18 @@ def play(charac, status):
                     print("\n\nThe Boulder turned into pieces")
                     print("You continue to walk... There are two paths. Choose: \n\t\t\tLeft\t\t\tForward")
                     print("-------------------------------------------------------------------------")
-                    choice = input("\n> ").lower()
+                    choose_path = input("\n> ").lower()
 
                     # If the user choose forward again
-                    if choice == "forward":
+                    if choose_path == "forward":
                         print("\n--------------------------------------------------------------------------")
                         status.playing_stats(charac)
                         print(f"\n\nThere are {fiery_fiend.name}.\nAttack: {fiery_fiend.attack}\nHealth: {fiery_fiend.hp}")
                         print("--------------------------------------------------------------------------")
-                        choice = input("Fight or Run?: ").lower()
+                        choose_path = input("Fight or Run?: ").lower()
 
-                        # if the user chooses fight
-                        if choice == "fight":
+                        # if the user chooses to fight
+                        if choose_path == "fight":
                             fighting = True
                             while fighting:
                                 # Simulation of fighting
@@ -190,12 +197,12 @@ def play(charac, status):
                                     # Another Path
                                     print("\nYou continue to walk and see a two paths. Choose:\nRight\t\t\tLeft")
                                     # Get User input
-                                    choice = input("\n> ").lower()
-                                    # If user chooses right
-                                    if choice == "right":
+                                    choose_path = input("\n> ").lower()
+                                    # If user chooses to go right
+                                    if choose_path == "right":
                                         print("\nThere is another boulder blocking the path. Do you want to destroy it?:")
                                         destroy = input('\n> ').lower()
-                                        # If user chooses yes
+                                        # If user choose yes
                                         if destroy in ['y', 'yes']:
                                             print('\nThe boulder turned into pieces!')
                                             print("You found a potion!!")
@@ -211,7 +218,7 @@ def play(charac, status):
 
                                             # Simulate fighting
                                             ask = input("Attack or Run?:\n> ").lower()
-                                            # IF the user chooses attack
+                                            # IF the user chooses to attack
                                             if ask == "attack":
                                                 # Active flag
                                                 fighting = True
@@ -245,12 +252,12 @@ def play(charac, status):
                                                         if charac.hp <= 0:
                                                             fighting = False
                                                             status.dead(charac)
-                                            # If the user chooses run
-                                            elif choice == "left":
+                                            # If the user chooses to run
+                                            elif choose_path == "run":
                                                 print("\nThe dragon blocked your way and attacked you")
                                                 print("You pass out and became feast of the Dragon")
                                                 status.dead(charac)
-                                            # If the choice is invalid
+                                            # If the choose_path is invalid
                                             else:
                                                 invalid = input('Do you want to quit?(y/n): ').lower()
                                                 if invalid in ['y', 'yes']:
@@ -258,13 +265,13 @@ def play(charac, status):
                                                 else:
                                                     print('Please enter a valid command')
 
-                                    # if the user chooses left
-                                    elif choice == "left":
+                                    # if the user chooses to go left
+                                    elif choose_path == "left":
                                         print("\nYou saw a spring")
                                         ask = input("\nDo you want to drink?(y/n): ").lower()
 
                                         # Ask the user he wants to drink
-                                        if ask not in ['y', 'yes']:  # if the user not drink
+                                        if ask not in ['y', 'yes']:  # if the user chooses to not drink
                                             print("\nThe path going back was blocked")
                                             print("You can't destroyed it!")
                                             status.dead(charac)
@@ -290,8 +297,8 @@ def play(charac, status):
                                         fighting = False
                                         status.dead(charac)
 
-                        # IF the user chooses run
-                        elif choice == 'run':
+                        # IF the user chooses to run
+                        elif choose_path == 'run':
                             print('\nFiery Fiend heard you... Fiery Fiend chase you and caught you...')
                             print('You become their feast.\nYOU DIED!')
                             status.dead(charac)
@@ -304,8 +311,8 @@ def play(charac, status):
                             else:
                                 print('Please enter a valid command')
 
-                    # If the user chooses left
-                    elif choice == "left":
+                    # If the user chooses to go left
+                    elif choose_path == "left":
                         print('You fallen to a trap. YOU DIED')
                         status.dead(charac)
 
@@ -317,8 +324,8 @@ def play(charac, status):
                         else:
                             print('Please enter a valid command')
 
-            # if the user chooses break
-            elif choice == "break":
+            # if the user choose break
+            elif choose_path == "break":
                 print("You have no weapon, it will take time to break it")
                 # Simulate that it is breaking the boulder
                 for _ in range(5):
@@ -327,6 +334,187 @@ def play(charac, status):
                 print("You died in Exhaustion and Starvation ")
                 status.dead(charac)
 
+            else:
+                invalid = input('Do you want to quit?(y/n): ').lower()
+                if invalid in ['y', 'yes']:
+                    sys.exit()
+                else:
+                    print('Please enter a valid command')
+
+        while choose_path != "forward":
+            # Classes that need in this gameplay
+            potion = Potions()
+            weapon = Weapon()
+            trolls = Trolls()
+            goblin = Goblins()
+            dragon = Dragon()
+
+            # Display
+            print("\n-----------------------------------------------------------------")
+            status.playing_stats(charac)
+            print(f"\n\n\tThere is an Enemy. It is a {goblin.name} and {trolls.name}")
+            print("\t\t\tFight\t\t\tRun")
+            print("----------------------------------------------------------------")
+            # Get user input
+            choose_path = input("\n> ").lower()
+            # IF use chooses to fight
+            if choose_path == 'fight':
+                fighting = True
+                while fighting:
+                    # Simulation of fighting
+                    print("\n------------------------------------------------------")
+                    status.playing_stats(charac)
+                    print(f'\n\nYou attacked. It dealt {charac.attack} damage')
+                    goblin.hp -= charac.attack
+                    trolls.hp -= charac.attack
+
+                    # Check if someone is dead
+                    if goblin.hp <= 0 or trolls.hp <= 0:
+                        fighting = False
+                        print('Goblins are dead')
+                        print("Trolls are dead")
+                        # Continuing the Adventure
+                        print("------------------------------------------------")
+                        status.playing_stats(charac)
+                        print("\n\n\tYou continued to walk and saw a two path")
+                        print("\n\t\tLeft\t\tRight")
+                        print("------------------------------------------------")
+                        # Get user input
+                        choose_path = input("\n> ").lower()
+                        # IF user chooses to go left
+                        if choose_path == "left":
+                            print("------------------------------------------------")
+                            status.playing_stats(charac)
+                            print("\n\n\tYou found a potion.")
+                            charac.hp += potion.hp
+                            print("\n\n\tThere are two paths")
+                            print("\n\t\tForward\t\tLeft")
+                            print("------------------------------------------------")
+                            # Get user input
+                            choose_path = input("\n> ").lower()
+                            # IF the user chooses to go left again
+                            if choose_path == "left":
+                                print("----------------------------------------------")
+                                print("\nThere is a narrow path ahead")
+                                print("\nYou want to go to that narrow path?")
+                                print("----------------------------------------------")
+                                # Get user input
+                                choose_path = input("\n> ").lower()
+                                # IF the user choose not go to the narrow path
+                                if choose_path not in ['y', 'yes']:
+                                    print("\nFiery Fiend appeared and grab you!")
+                                    status.dead(charac)
+                                # IF the user chooses to go to the narrow path
+                                else:
+                                    print("\nYou found new weapon!")
+                                    weapon.attack += charac.attack
+                                    for _ in range(5):
+                                        print("\n.........")
+                                        time.sleep(2)
+                                    print("\nThere is a big cast shadow")
+                                    print("ROOOAAAARR!")
+                                    print("The Dragon appeared! You need to defeat the Dragon in order to retrieved the Morphia Jewels")
+
+                                    # Simulate fighting
+                                    ask = input("\nAttack or Run?:\n> ").lower()
+                                    # IF the user chooses attack
+                                    if ask == "attack":
+                                        # Active flag
+                                        fighting = True
+                                        # Fighting loop
+                                        while fighting:
+                                            print("------------------------------------------------------------------------------------------------------")
+                                            # Display the users stats
+                                            status.playing_stats(charac)
+                                            print(f"\nYou attacked and it dealt {charac.attack} damage ")
+                                            dragon.hp -= charac.attack
+
+                                            # Check if the health of dragon is equal to zero and display the user has won
+                                            if dragon.hp <= 0:
+                                                print("\nYou defeated the Dragon!!! You won! The villagers are happy because the Morphia Jewels are back.")
+                                                play_again = input("\nDo you want to play again?(y/n): ").lower()
+
+                                                # Ask user if they want to play again
+                                                if play_again not in ['y', 'yes']:
+                                                    sys.exit()
+                                                else:
+                                                    titlescreen()
+                                            # IF the dragon is still alive
+                                            else:
+                                                # Display the stats of dragon
+                                                print("\nt")
+                                                status.playing_stats(dragon)
+                                                print(f"\n\nThe Dragon attacked and it dealt {dragon.attack} damage!")
+                                                charac.hp -= dragon.attack
+
+                                                # Check if the user is dead
+                                                if charac.hp <= 0:
+                                                    fighting = False
+                                                    status.dead(charac)
+                                    # If the user chooses to run
+                                    elif choose_path == "run":
+                                        print("\nThe dragon blocked your way and attacked you")
+                                        print("You pass out and became feast of the Dragon")
+                                        status.dead(charac)
+                                    # If the choose_path is invalid
+                                    else:
+                                        invalid = input('Do you want to quit?(y/n): ').lower()
+                                        if invalid in ['y', 'yes']:
+                                            sys.exit()
+                                        else:
+                                            print('Please enter a valid command')
+
+                            # If the user choose Forward
+                            elif choose_path == "forward":
+                                print("\n......")
+                                time.sleep(2)
+                                print("BOOOGSH")
+                                print("You fell into a trap.")
+                                status.dead(charac)
+
+                            # If the users choose_path is invalid
+                            else:
+                                invalid = input('Do you want to quit?(y/n): ').lower()
+                                if invalid in ['y', 'yes']:
+                                    sys.exit()
+                                else:
+                                    print('Please enter a valid command')
+                        # If the user choose right after the fight
+                        elif choose_path == "right":
+                            for _ in range(5):
+                                print(".....")
+                                time.sleep(1)
+                            print("BOOOOOGSH!")
+                            print("Big Boulder fell on you")
+                            status.dead(charac)
+                        # If the users choose_path is invalid
+                        else:
+                            invalid = input('Do you want to quit?(y/n): ').lower()
+                            if invalid in ['y', 'yes']:
+                                sys.exit()
+                            else:
+                                print('Please enter a valid command')
+
+                    else:
+                        # Display the stats of fiery fiend
+                        print("\n")  # Adding spaces
+                        print(f'Goblins{status.playing_stats(goblin)}')
+                        print(f'Trolls{status.playing_stats(trolls)}')
+                        print(f'\n\nGoblin attacked. It dealt {goblin.attack} damage')
+                        print(f'\n\nTrolls attacked. It dealt {trolls.attack} damage')
+                        # Updating the status of the character
+                        charac.hp -= goblin.attack
+                        charac.hp -= trolls.attack
+                        # Check if users hp is zero
+                        if charac.hp <= 0:
+                            fighting = False
+                            status.dead(charac)
+            # IF the user choose to run in fighting goblins and trolls
+            elif choose_path == "run":
+                print('\nGoblin heard you... Goblins and Trolls chase you and caught you...')
+                print('You become their feast.\nYOU DIED!')
+                status.dead(charac)
+            # IF the user enter a invalid command
             else:
                 invalid = input('Do you want to quit?(y/n): ').lower()
                 if invalid in ['y', 'yes']:
@@ -375,7 +563,7 @@ def helper():
 
 
 def choose_role():
-    choose_charac = "\nWelcome to the world of Morhphia.\n\nPlease choose a Character.\nAssassin\nArcher\nWarrior"
+    choose_charac = "\nWelcome to the world of Morphia.\n\nPlease choose a Character.\nAssassin\nArcher\nWarrior"
     # Printing slowly
     for letter in choose_charac:
         sys.stdout.write(letter)
