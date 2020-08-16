@@ -1,5 +1,5 @@
-import random
 import math
+import random
 import pygame
 
 # Initialization
@@ -26,14 +26,14 @@ enemy = []
 enemyX = []  # X POSITION OF ENEMY
 enemyY = []  # Y POSITION OF ENEMY
 enemyX_vel = []  # CHANGE VALUE OF X VALUE
-enemyY_vel = [] # CHANGE VALUE OF Y VALUE
-num_of_enemies = 6
+enemyY_vel = []  # CHANGE VALUE OF Y VALUE
+num_of_enemies = random.randint(6, 10)
 
 for i in range(num_of_enemies):  # To loop through list
     enemy.append(pygame.image.load("Images/enemy.png"))
-    enemyX.append(random.randint(0, 536))   # X POSITION OF ENEMY
+    enemyX.append(random.randint(0, 536))  # X POSITION OF ENEMY
     enemyY.append(random.randint(0, 200))  # Y POSITION OF ENEMY
-    enemyX_vel.append(1)   # CHANGE VALUE OF X VALUE
+    enemyX_vel.append(1)  # CHANGE VALUE OF X VALUE
     enemyY_vel.append(20)  # CHANGE VALUE OF Y VALUE
 
 # ADDING PLAYER BULLET
@@ -46,14 +46,22 @@ bullet_state = "ready"  # state of the bullet (shoot/not)
 
 # SCORE
 score = 0
-font = pygame.font.Font("freesansbold.ttf" , 32)
+font = pygame.font.Font("freesansbold.ttf", 32)
 textX = 10
 textY = 10
+
+# Game Over
+game_over_font = pygame.font.Font("freesansbold.ttf", 64)
 
 
 def show_score(x, y):
     score1 = font.render("Score: " + str(score), True, (255, 255, 255))
     screen.blit(score1, (x, y))
+
+
+def game_over():
+    game_over_text = game_over_font.render("GAME OVER", True, (255, 255, 255))
+    screen.blit(game_over_text, (100, 250))
 
 
 def player(x, y):
@@ -68,6 +76,7 @@ def bullet_fire(x, y):
     global bullet_state
     bullet_state = "fire"
     screen.blit(bullet_img, (x + 16, y + 10))
+
 
 def collision(bulletX, bulletY, enemyX, enemyY):
     distance = math.sqrt((math.pow(enemyX - bulletX, 2)) + (math.pow(enemyY - bulletY, 2)))
@@ -113,6 +122,13 @@ while playing:
         spX = 536
 
     for i in range(num_of_enemies):
+        # Game Over
+        if enemyY[i] > 275:
+            for j in range(num_of_enemies):
+                enemyY[j] = 2000
+            game_over()
+            break
+
         enemyX[i] += enemyX_vel[i]  # to move the enemy
 
         if enemyX[i] <= 0:  # set the position of the enemy to 0 to create a boundary
