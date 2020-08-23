@@ -17,5 +17,5 @@
 
 - Alien Annihilation
 
-   - [gamecs.py](https://github.com/Charles2005/Projects/tree/master/Alien%20Annihilation)  
+   - [alienAnnihilator.py](https://github.com/Charles2005/Projects/tree/master/Alien%20Annihilation)  
    - Simple Space Invader Game
